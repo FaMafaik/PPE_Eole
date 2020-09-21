@@ -2,43 +2,48 @@ package PPE_EolePackage;
 
 
 public class Regate {
-	private String locaReg;
-	private String libReg;
+	private static String nomRegate;
+	private static String locaReg;
     private static double distReg;
 	
-	
-	
-	
-
-	public Regate(String lib,String loca, double distReg) {
-		this.locaReg=loca;
-		this.libReg = lib;
+    public Regate() {
+    	Regate.nomRegate = null;
+    	Regate.locaReg = null;
+    	Regate.distReg = 0;
+    }
+    
+    public Regate(String nomRegate, String locaReg, double distReg) {
+		Regate.nomRegate = nomRegate;
+		Regate.locaReg = locaReg;
 		Regate.distReg = distReg;
-		
 	}
-	
-	public String toString() {
-		return "Le nom de la régate: " + libReg + ". " + "Situé à/en/aux :" + locaReg + ". " + "Qui a une distance de " + distReg + " miles." ; 
+    
+    public static String getNomRegate() {
+		return nomRegate;
 	}
-	public String getLocaReg() {
+
+	public void setNomRegate(String nomRegate) {
+		Regate.nomRegate = nomRegate;
+	}
+
+	public static String getLocaReg() {
 		return locaReg;
 	}
+
 	public void setLocaReg(String locaReg) {
-		this.locaReg = locaReg;
+		Regate.locaReg = locaReg;
 	}
-	public String getLibReg() {
-		return libReg;
-	}
-	public void setLibReg(String libReg) {
-		this.libReg = libReg;
-	}
-	
+
 	public static double getDistReg() {
 		return distReg;
 	}
 
 	public void setDistReg(double distReg) {
 		Regate.distReg = distReg;
+	}
+	
+	public String toString() {
+		return "Le nom de la régate: " + nomRegate + ". " + "Situé à/en/aux :" + locaReg + ". " + "Qui a une distance de " + distReg + " miles." ; 
 	}
 	
 }

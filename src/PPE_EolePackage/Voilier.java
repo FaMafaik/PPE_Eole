@@ -3,6 +3,7 @@ package PPE_EolePackage;
 import java.util.ArrayList;
 import java.util.List;
 
+
 // Ici sont les informations de chaques voiliers
 
 public class Voilier {
@@ -11,11 +12,8 @@ public class Voilier {
 	private String nomSkipper;
 	private int classeVoilier;
 	private int rating;
-	private int nbVoilier;
-
-
 	public Voilier voilier; //Le voilier qu'on prend de la classe Voilier
-	public List<Voilier> lesVoiliers; // on fait une premiere importation
+	public static List<Voilier> lesVoiliers; // on fait une premiere importation
 	
 	
 	public Voilier() {
@@ -23,7 +21,6 @@ public class Voilier {
 		this.nomSkipper = null;
 		this.classeVoilier = 0;
 		this.rating = 0;
-		this.nbVoilier = 0;
 		lesVoiliers = new ArrayList<>();
 	}
 	
@@ -33,26 +30,28 @@ public class Voilier {
 		this.nomSkipper = nomSkipper;
 		this.classeVoilier = classeVoilier;
 		this.rating = rating;
-		this.nbVoilier = nbVoilier;
 	}
 
 
 
-
+	////////////////////////////////////////////////   METHODE POUR AJOUTER UN VOILIER DANS L ARRAY LIST lesVoiliers
 	public void AjouteVoilier(Voilier voilier) {
 		lesVoiliers.add(voilier);
 	}
+	////////////////////////////////////////////////////////////////////////
 	
 	public Voilier mesVoiliers() {
 		return lesVoiliers.get(0);
 	}
 	
-	public int getNbVoilier() {
-		return nbVoilier;
+	
+	public static int getNbVoilier() {
+	
+		
+		return FenAjout.lesVoiliers.size();
 	}
 
-	public void setNbVoilier(int nbVoilier) {
-		this.nbVoilier = nbVoilier;
+	public static void setNbVoilier(int nbVoilier) {
 	}
 	public String getNomVoilier() {
 		return nomVoilier;

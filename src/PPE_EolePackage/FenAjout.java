@@ -4,7 +4,6 @@ package PPE_EolePackage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,18 +16,35 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 
-public class FenAjout {
-	private JFrame frameAjout;   //On crée la fenêtre du nom de frame
+
+
+
+public class FenAjout  {
+	/////////////////////////////////////////////////////////////// UNE VARIABLE STATIC EST UNE VARIABLE DE CLASSE ET NON D INSTANCE
+	///////////////////////////////////////////////////////////////////////////  ELLE N EST PAS PROPRE A L OBJET QUON CREE   SERT POUR UTILISER LA VARIABLE DANS LES AUTRES CLASSES
+	
+	JFrame frameAjout;   //On crée la fenêtre du nom de frame
     private static JTextField tfNomRegate;  //Champ de saisie
 	private static JTextField tfLocalisation;
 	private static JTextField tfDistance;
 	
+	private static JTextField tfNomVoil;
+	private static JTextField tfRating;
+	private static JTextField tfSkipper;
+	static ButtonGroup grpBtnClasses;
+	
+
+
+	private static JButton btnCommencer;
+	
+
+
 	public static JTextField getTfNomRegate() {
 		return tfNomRegate;
 	}
@@ -53,18 +69,47 @@ public class FenAjout {
 		FenAjout.tfDistance = tfDistance;
 	}
 	
-	private JTextField tfNomVoil;
-	private JTextField tfRating;
-	private JTextField tfSkipper;
 	
+	public static JTextField getTfNomVoil() {
+		return tfNomVoil;
+	}
 
+	public void setTfNomVoil(JTextField tfNomVoil) {
+		FenAjout.tfNomVoil = tfNomVoil;
+	}
+
+	public static JTextField getTfRating() {
+		return tfRating;
+	}
+
+	public void setTfRating(JTextField tfRating) {
+		FenAjout.tfRating = tfRating;
+	}
+
+	public static JTextField getTfSkipper() {
+		return tfSkipper;
+	}
+
+	public void setTfSkipper(JTextField tfSkipper) {
+		FenAjout.tfSkipper = tfSkipper;
+	}
+
+	public static ButtonGroup getGrpBtnClasses() {
+		return grpBtnClasses;
+	}
+
+	public static void setGrpBtnClasses(ButtonGroup grpBtnClasses) {
+		FenAjout.grpBtnClasses = grpBtnClasses;
+	}
 	
 	static List<Voilier> lesVoiliers = new ArrayList<>();
 	Voilier voilier1 = new Voilier();
 	
 	JButton btnAjout;          //Bouton Ajout
-	JRadioButton btnClasse1; //Bouton de selection !!!!!!!!!!!!!!
-	JRadioButton btnClasse2;
+	
+	static JRadioButton btnClasse1; //Bouton de selection !!!!!!!!!!!!!!
+	static JRadioButton btnClasse2;
+	
 	JButton btnSupprimer; //Pour Supprimer un voilier
 	DefaultListModel<String> dlm; //Stocker les informations de l'interface
 	JList<String> listVoiliers;
@@ -152,7 +197,10 @@ public class FenAjout {
 		lblClasse.setBounds(547, 292, 103, 56);
 		panel.add(lblClasse);
 		
-		ButtonGroup GrpBtn = new ButtonGroup();
+		
+		
+		/////////////////////////////////////////////////////////// LES JRADIOBUTTON POUR CHOISIR LA CLASSE DU VOILIER
+		grpBtnClasses = new ButtonGroup();
 		btnClasse1 = new JRadioButton("1");
 		btnClasse1.setBackground(Color.CYAN);
 		btnClasse1.setBounds(650, 309, 47, 29);
@@ -163,8 +211,10 @@ public class FenAjout {
 		btnClasse2.setBounds(704, 309, 47, 29);
 		panel.add(btnClasse2);
 		
-		GrpBtn.add(btnClasse1); // On ajoute les boutons au groupe pour en selectionné que un
-		GrpBtn.add(btnClasse2);
+		grpBtnClasses.add(btnClasse1); // On ajoute les boutons au groupe pour en selectionné que un
+		grpBtnClasses.add(btnClasse2);
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		
 		JLabel lblRating = new JLabel("RATING :");
 		lblRating.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -196,94 +246,106 @@ public class FenAjout {
 		btnAjout.setBounds(597, 508, 297, 39);
 		panel.add(btnAjout);
 		
-		JButton btnCommencer = new JButton("COMMENCER LA COURSE");
+		btnCommencer = new JButton("COMMENCER LA COURSE");
 		btnCommencer.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		btnCommencer.setBounds(270, 572, 437, 76);
 		panel.add(btnCommencer);
 		
 		btnSupprimer = new JButton("X");
 		
-		btnSupprimer.setBounds(1017, 10, 70, 70);
+		btnSupprimer.setBounds(950, 10, 70, 70);
 		panel.add(btnSupprimer);
 		
 		
 		int valClasse1 = Integer.parseInt(btnClasse1.getText());
 		int valClasse2 = Integer.parseInt(btnClasse2.getText());
 		
+	    
+	 
 		
+	///////////////////////////////////////////////////////////// QUAND ON CLIQUE SUR LE BOUTON AJOUT DE VOILIER 
 		
 		btnAjout.addActionListener(new ActionListener() {
-			
-
-			
 			public void actionPerformed(ActionEvent e) {
-				Voilier voilier1 = new Voilier();
-				
-				JLabel lblNumVoilier = new JLabel(voilier1.getNbVoilier() + 1 + "er Voilier");
-				
-				if(voilier1.getNbVoilier()== 0) {
-					lblNumVoilier.setText("1er Voilier");
-				} else if(voilier1.getNbVoilier() > 0){
-					lblNumVoilier.setText(voilier1.getNbVoilier() + "ème Voilier");
-				}
-				
-				lblNumVoilier.setText("ze");
-				
-				voilier1.setNbVoilier(dlm.getSize()+1);
-				System.out.println(voilier1.getNbVoilier());
-				
-				
-				
-				//méthode qui ajoute un voilier
-				voilier1.setNomVoilier(tfNomVoil.getText());
-				
-				
-				System.out.println(voilier1.getNomVoilier().toString());
-				
-				
-				if(btnClasse1.isSelected() ) {
-					System.out.println(valClasse1);
-					voilier1.setClasseVoilier(valClasse1);
-				}
-				else if(btnClasse2.isSelected()) {
-					System.out.println(valClasse2);
-					voilier1.setClasseVoilier(valClasse2);
-				}
 
+				ExceptionFenAjout.champsVoilier();
+					
+				if(ExceptionFenAjout.etatChampsVoilier == true) {
+					Voilier voilier1 = new Voilier();
 				
-				
-							  // generer une exception
-						
-						
-				int valRating = Integer.parseInt(tfRating.getText());
-				voilier1.setRating(valRating);
-				System.out.println(voilier1.getRating());
-				
-				voilier1.setNomSkipper(tfSkipper.getText());
-				System.out.println(voilier1.getNomSkipper());
-				System.out.println();
-				//Outils.tabVoilier = new Voilier[20];
-				dlm.addElement(voilier1.getNomVoilier()); // ON AJOUTE LE NOM DU VOILIER DANS LA JLIST
-				
-				lesVoiliers.add(voilier1);
-				System.out.println(voilier1.toString());
-				System.out.println();
-			
-				for(Voilier voilier : lesVoiliers) {
-					System.out.println(voilier.toString());
-				}
-				
-				
-				if(lesVoiliers.size() > 19) {
-					System.out.println("Vous ne pouvez plus ajouter de voiliers");
-					btnAjout.setVisible(false);
-				} else {
-					btnAjout.setVisible(true);
-				}
-			}
-			
-		});
+					
+					if(lesVoiliers.size() == 0) {
+						lblNumVoilier.setText("1er eeVoilier");
+					} else if(lesVoiliers.size() > 0){
+						lblNumVoilier.setText( "ème Voilier");
+					}
+					
+					lblNumVoilier.setText("ze");
+					 
+					System.out.println("Il y'a " + ((FenAjout.lesVoiliers.size()) + 1) + " voiliers inscrit à la course");
+					
+					
+					//ON AJOUTE LE NOM DU VOILIER A L INSTANCE DE LOBJET VOILIER ET DANS LARRAY LIST
+					voilier1.setNomVoilier(tfNomVoil.getText());
+					System.out.println(voilier1.getNomVoilier().toString());
+					///
+					
+					if(btnClasse1.isSelected() ) {
+						System.out.println("La classe selectionnée est : " + valClasse1);
+						voilier1.setClasseVoilier(valClasse1);
+					}
+					else if(btnClasse2.isSelected()) {
+						System.out.println("La classe selectionnée est : " + valClasse2);
+						voilier1.setClasseVoilier(valClasse2);
+					}
+					
+					//////////////////////////////////////////// ON CONVERTI LE RATING SAISIE STRING EN INT POUR LE METTRE DANS LINSTANCE DU VOILIER
+					
+					if(getTfRating().getText() == null) {
+						System.out.println("il faut saisir le rating");
+					} else {
+						int valRating = Integer.parseInt(tfRating.getText());
+						voilier1.setRating(valRating);
+						System.out.println("Le rating du voilier sasie est égale à : " + voilier1.getRating());
+						///////////////////////////////////////////////////////////////////////////
+					}
+					
+					
 		
+					voilier1.setNomSkipper(tfSkipper.getText());
+					System.out.println("Le nom du skipper saisi est : " + voilier1.getNomSkipper());
+					System.out.println();
+					
+					dlm.addElement(voilier1.getNomVoilier()); // ON AJOUTE LE NOM DU VOILIER DANS LA JLIST
+					
+					
+					
+					if(lesVoiliers.size() < 21) {
+						btnAjout.setVisible(true);
+						// ON AFFICHE A CHAQUE FOIS LE CONTENU DE LA LIST LES VOILIERS POUR VERIFIER SI IL A BIEN ETE INTRODUIT
+						lesVoiliers.add(voilier1);  // ON AJOUTE L INSTANCE DE LOBJET VOILIER DANS LARRAY LIST
+						System.out.println(voilier1.toString());
+						System.out.println();
+					} else {
+						btnAjout.setVisible(false);
+						System.out.println("Vous ne pouvez plus ajouter de voiliers");
+					}
+					
+					for(Voilier voilier : lesVoiliers) {
+						System.out.println(voilier.toString());
+					}
+				} else {
+					ExceptionFenAjout.etatChampsVoilier = false;
+					System.out.println("Il faut remplir les champs du voilier");
+				}	
+			}
+		});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+///////////////////////////////////////////////////////////////////////////// QUAND ON CLIQUE SUR LE BOUTON SUPPRIMER   IL DOIT SUPPRIMER LE VOILIER QU ON A CHOISI  DS LA JLIST PAR UN CLIQUE DESSUS
+		////////////////////////////////////////////////////////////////////////////// SINON IL SUPPRIME SIMPLEMENT LE DERNIER VOILIER SAISI
 		btnSupprimer.addActionListener(new ActionListener() {
 
 			@Override
@@ -292,77 +354,80 @@ public class FenAjout {
 					System.out.println(voilier1.toString());
 				}
 			}
-			
+			///////////////////////////////////////////////////////// A MODIFIER ET FINIR
 		});
-		
-		//JButton btnArrive = new JButton("XXX");
-
+////////////////////////////////////////////////////////////////////
 	
-		
-		btnCommencer.addActionListener(new ActionListener() {
 
+		
+//////////////////////////////////////////////////////////////////////////////// QUAND ON CLIC SUR LE BOUTON COMMENCER
+		btnCommencer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ExceptionFenAjout.champsRegate();
 				
-				
-				Chrono chrono = new Chrono();
-				ActionListener actionChrono = new ActionListener() {
-					public void actionPerformed(ActionEvent e1)
-						{
-							Chrono.setSeconde(Chrono.getSeconde() + 1);
-							if(Chrono.getSeconde()==60)
-							{
-								Chrono.setSeconde(0);
-								Chrono.setMinute(Chrono.getMinute() + 1);
-							}
-							if(Chrono.getMinute()==60)
-							{
-								Chrono.setMinute(0);
-								Chrono.setHeure(Chrono.getHeure() + 1);
-							}
-							chrono.getLblChrono().setText(Chrono.getHeure()+":"+Chrono.getMinute()+":"+Chrono.getSeconde());
-						}
-					};
-				int delais = 1000;
-				final Timer timer1 = new Timer(delais, actionChrono);
-				
-								
-
-				if(lesVoiliers.size() + 1 <= 2) {
-					System.out.println("Faut rentrer au moins 2 voiliers");
-				}
-				else {
-					timer1.start();
-					chrono.frameChrono.setVisible(true);
 					
-				}
+					
+					if(lesVoiliers.size() +1 > 2) {
+						if(ExceptionFenAjout.etatChampsRegate = true) {
+							Regate regate1 = new Regate();
+							regate1.setNomRegate(tfNomRegate.getText());
+							regate1.setLocaReg(tfLocalisation.getText());
+							
+	
+							double valDistance = Double.parseDouble(tfDistance.getText());
+							regate1.setDistReg(valDistance);
+							System.out.println(Regate.getDistReg());
+							
+							FenCourse fenCourse = new FenCourse();
+							fenCourse.frameCourse.setVisible(true);
+							Chronometre.createTimer();
+							Chronometre.startTimer();
+						} else {
+							JOptionPane.showMessageDialog(null, "Il faut remplir tout les champs de regate");
+		
+						}
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "il faut au moins 2 voiliers");
+					}
+				//	ExceptionFenAjout.etatChampsRegate = false;
+					System.out.println(ExceptionFenAjout.etatChampsRegate);
+					
+				//ExceptionFenAjout.champsRegate();
 				
+				//if(ExceptionFenAjout.etatChampsRegate = true) {
+				//	if(lesVoiliers.size() + 1 > 2) {
+				//		FenCourse fenCourse = new FenCourse();
+				//		Chronometre.createTimer();
+				//		Chronometre.startTimer();
+						
+			//			fenCourse.frameCourse.setVisible(true);
+						
+						//System.out.println("Faut rentrer au moins 2 voiliers");
+			//		} else {
+					//	System.out.println("Il faut au moins 2 voiliers");
+			//		}
+			//	} else {
+			//		System.out.println("il faut remplir les champs");
 				
-			
+					
+				//	System.out.println(fenCourse.getLblChrono().getText());  
+					
+					
+			//		ActionListener tache_timer = new ActionListener();
+			//Timer timer1= new Timer(delais, tache_timer);
+				//	timer1.start();
+					//fenCourse.getLblChrono().setText("ee");
+				//	System.out.println(fenCourse.getLblChrono().getText());   //Retourne ce qu'il y'a au chrono
+					
+			//fenCourse.setLblChronoStr(fenCourse.getLblChrono());
+				//}
 			}
 			
 		});
 		
-	}
 	
-		
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FenAjout fenAjout1 = new FenAjout();
-					fenAjout1.frameAjout.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-	
-			}
-		});
-		
-		
-		//Outils.tabVoilier = new Voilier[20];
+		}
 
-		//System.out.println(lesVoiliers.get(0));
-	}
 }

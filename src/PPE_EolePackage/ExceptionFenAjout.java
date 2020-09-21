@@ -1,6 +1,6 @@
 package PPE_EolePackage;
 
-import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
 
 
 
@@ -8,23 +8,55 @@ public class ExceptionFenAjout {
 
 	//private JPanel contentPane;
 	//private final JList listExceptions = new JList();
-	JTextArea ta;
-	boolean b = true;
+
 	
-	public void champsRegate() {
+	static boolean etatChampsRegate = false;
+	static boolean etatChampsVoilier = false;
+	
+	
+	
+	
+	
+	
+	
+	public static void champsRegate() {
 		
 		try {
-			if (FenAjout.getTfNomRegate().getText().length() == 0 &&
-				FenAjout.getTfLocalisation().getText().length() == 0 &&
+			if (
+				FenAjout.getTfNomRegate().getText().length() == 0 ||
+				FenAjout.getTfLocalisation().getText().length() == 0 ||
 				FenAjout.getTfDistance().getText().length() == 0)
 			{
-				System.out.println("Il faut rekoomplir");
+						JOptionPane.showMessageDialog(null, "Il faut remplir les champs");
+						
 			} else {
-				System.out.println("cebon");
+				ExceptionFenAjout.etatChampsRegate = true;
+				System.out.println("Etat champs regate : " + etatChampsRegate);
 			}
 		} catch (Exception e) {
-			ta.setText(e.toString());
-			System.out.println(ta.getText());
+			//
+		}
+	}
+	
+	public static void champsVoilier() {
+		try {
+			//FenAjout.getTfNomVoil().getText().length() == 0 ||
+			if (
+				FenAjout.getTfNomVoil().getText().length() == 0 ||
+				FenAjout.grpBtnClasses.getSelection() == null ||
+				FenAjout.getTfRating().getText().length() == 0 ||
+				FenAjout.getTfSkipper().getText().length() == 0
+				)
+			{
+				JOptionPane.showMessageDialog(null, "il faut remplir les champs du voilier");
+				etatChampsVoilier = false;
+			} else {
+				System.out.println("Les champs du voilier ont été reemplis");
+				etatChampsVoilier = true;
+			}
+			
+		} catch (Exception e) {
+			
 		}
 		
 	}
